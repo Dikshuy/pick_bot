@@ -1,1 +1,1 @@
-# pick_bot
+# pick_and_place_bot
