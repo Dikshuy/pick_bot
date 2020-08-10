@@ -22,11 +22,11 @@ area.
 
 
 ## Team
-1.Dikshant
-2.Shreeya Shrikant Athaley
-3.Leena Chaudhari
-4.Navjit Debnath
-5.Tejal Ashwini Barnwal
+1.Dikshant<br>
+2.Shreeya Shrikant Athaley<br>
+3.Leena Chaudhari<br>
+4.Navjit Debnath<br>
+5.Tejal Ashwini Barnwal<br>
 
 
 
