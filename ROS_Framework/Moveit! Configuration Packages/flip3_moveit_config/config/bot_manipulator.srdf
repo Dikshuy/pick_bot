@@ -1,0 +1,290 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="bot_manipulator">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="manipulator">
+        <joint name="bot_manipulator_joint" />
+        <joint name="base_rotation_joint" />
+        <joint name="rotation_vertical_joint" />
+        <joint name="vertical_middle_arm_joint" />
+        <joint name="middle_end_joint" />
+        <joint name="gripper_holder_joint" />
+    </group>
+    <group name="gripper_left">
+        <joint name="manipulator_gripper_joint" />
+        <joint name="base_gear1_joint" />
+        <joint name="finger_gear1_joint" />
+    </group>
+    <group name="gripper_right">
+        <joint name="manipulator_gripper_joint" />
+        <joint name="base_gear2_joint" />
+        <joint name="finger_gear2_joint" />
+    </group>
+    <group name="gripper">
+        <group name="gripper_left" />
+        <group name="gripper_right" />
+    </group>
+    <group name="robot">
+        <group name="manipulator" />
+        <group name="gripper" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="start" group="manipulator">
+        <joint name="base_rotation_joint" value="0" />
+        <joint name="gripper_holder_joint" value="-2.55" />
+        <joint name="middle_end_joint" value="-0.2725" />
+        <joint name="vertical_middle_arm_joint" value="0.1686" />
+    </group_state>
+    <group_state name="gripper_turn1" group="gripper">
+        <joint name="base_gear1_joint" value="1.19" />
+        <joint name="base_gear2_joint" value="1.19" />
+        <joint name="finger_gear1_joint" value="-1.23" />
+        <joint name="finger_gear2_joint" value="-1.23" />
+        <joint name="manipulator_gripper_joint" value="-1.57" />
+    </group_state>
+    <group_state name="come_down" group="manipulator">
+        <joint name="base_rotation_joint" value="0" />
+        <joint name="gripper_holder_joint" value="-2.0571" />
+        <joint name="middle_end_joint" value="0.2813" />
+        <joint name="vertical_middle_arm_joint" value="0.2182" />
+    </group_state>
+    <group_state name="gripper_close" group="gripper">
+        <joint name="base_gear1_joint" value="-0.341" />
+        <joint name="base_gear2_joint" value="-0.341" />
+        <joint name="finger_gear1_joint" value="0.3479" />
+        <joint name="finger_gear2_joint" value="0.3479" />
+        <joint name="manipulator_gripper_joint" value="-1.57" />
+    </group_state>
+    <group_state name="place1" group="manipulator">
+        <joint name="base_rotation_joint" value="-1.57" />
+        <joint name="gripper_holder_joint" value="-2.0571" />
+        <joint name="middle_end_joint" value="0.2813" />
+        <joint name="vertical_middle_arm_joint" value="0.2182" />
+    </group_state>
+    <group_state name="place2" group="manipulator">
+        <joint name="base_rotation_joint" value="-1.5527" />
+        <joint name="gripper_holder_joint" value="-1.7308" />
+        <joint name="middle_end_joint" value="-0.3516" />
+        <joint name="vertical_middle_arm_joint" value="-0.7441" />
+    </group_state>
+    <group_state name="place_gripper_open" group="gripper">
+        <joint name="base_gear1_joint" value="1.19" />
+        <joint name="base_gear2_joint" value="1.19" />
+        <joint name="finger_gear1_joint" value="-1.23" />
+        <joint name="finger_gear2_joint" value="-1.23" />
+        <joint name="manipulator_gripper_joint" value="0" />
+    </group_state>
+    <group_state name="gripper_turn2" group="gripper">
+        <joint name="base_gear1_joint" value="-0.341" />
+        <joint name="base_gear2_joint" value="-0.341" />
+        <joint name="finger_gear1_joint" value="0.3479" />
+        <joint name="finger_gear2_joint" value="0.3479" />
+        <joint name="manipulator_gripper_joint" value="0" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="end_effector" parent_link="gripper_holder_link" group="gripper" parent_group="manipulator" />
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="world_chassis_bot_virtual_joint" type="fixed" parent_frame="/world" child_link="base_link" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link_arm" link2="base_link_bot" reason="Adjacent" />
+    <disable_collisions link1="base_link_arm" link2="base_link_gripper" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="end_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="finger_gear1_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="finger_gear2_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="gear1_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="gear2_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="gripper_holder_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="link1" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="link2" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="link3" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="link4" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="link5" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="link6" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="object" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="rotation_link" reason="Adjacent" />
+    <disable_collisions link1="base_link_arm" link2="table1" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="table2" reason="Never" />
+    <disable_collisions link1="base_link_arm" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="base_link_gripper" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="end_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="gear1_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="gear2_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="gripper_holder_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="link1" reason="Adjacent" />
+    <disable_collisions link1="base_link_bot" link2="link2" reason="Adjacent" />
+    <disable_collisions link1="base_link_bot" link2="link3" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="link4" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="link5" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="link6" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="object" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="base_link_bot" link2="table1" reason="Adjacent" />
+    <disable_collisions link1="base_link_bot" link2="table2" reason="Adjacent" />
+    <disable_collisions link1="base_link_bot" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="gear1_link" reason="Adjacent" />
+    <disable_collisions link1="base_link_gripper" link2="gear2_link" reason="Adjacent" />
+    <disable_collisions link1="base_link_gripper" link2="gripper_holder_link" reason="Adjacent" />
+    <disable_collisions link1="base_link_gripper" link2="link1" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="link2" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="link3" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="link4" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="link5" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="link6" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="object" reason="User" />
+    <disable_collisions link1="base_link_gripper" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="base_link_gripper" link2="table1" reason="User" />
+    <disable_collisions link1="base_link_gripper" link2="table2" reason="User" />
+    <disable_collisions link1="base_link_gripper" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="end_link" link2="gear1_link" reason="Never" />
+    <disable_collisions link1="end_link" link2="gripper_holder_link" reason="Adjacent" />
+    <disable_collisions link1="end_link" link2="link1" reason="Never" />
+    <disable_collisions link1="end_link" link2="link2" reason="Never" />
+    <disable_collisions link1="end_link" link2="link3" reason="Never" />
+    <disable_collisions link1="end_link" link2="link4" reason="Never" />
+    <disable_collisions link1="end_link" link2="link5" reason="Never" />
+    <disable_collisions link1="end_link" link2="link6" reason="Never" />
+    <disable_collisions link1="end_link" link2="middle_arm_link" reason="Adjacent" />
+    <disable_collisions link1="end_link" link2="object" reason="User" />
+    <disable_collisions link1="end_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="end_link" link2="table1" reason="User" />
+    <disable_collisions link1="end_link" link2="table2" reason="Never" />
+    <disable_collisions link1="end_link" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="gear1_link" reason="Adjacent" />
+    <disable_collisions link1="finger_gear1_link" link2="gripper_holder_link" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="link1" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="link2" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="link4" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="link6" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="object" reason="User" />
+    <disable_collisions link1="finger_gear1_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="finger_gear1_link" link2="table1" reason="User" />
+    <disable_collisions link1="finger_gear1_link" link2="table2" reason="User" />
+    <disable_collisions link1="finger_gear1_link" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="gear1_link" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="gear2_link" reason="Adjacent" />
+    <disable_collisions link1="finger_gear2_link" link2="gripper_holder_link" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="link2" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="link4" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="link5" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="link6" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="object" reason="User" />
+    <disable_collisions link1="finger_gear2_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="finger_gear2_link" link2="table1" reason="User" />
+    <disable_collisions link1="finger_gear2_link" link2="table2" reason="User" />
+    <disable_collisions link1="finger_gear2_link" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="gear2_link" reason="User" />
+    <disable_collisions link1="gear1_link" link2="gripper_holder_link" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="link1" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="link2" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="link3" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="link4" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="link5" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="link6" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="object" reason="User" />
+    <disable_collisions link1="gear1_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="gear1_link" link2="table1" reason="User" />
+    <disable_collisions link1="gear1_link" link2="table2" reason="User" />
+    <disable_collisions link1="gear1_link" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="gripper_holder_link" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="link1" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="link2" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="link3" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="link4" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="link5" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="link6" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="object" reason="User" />
+    <disable_collisions link1="gear2_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="table1" reason="User" />
+    <disable_collisions link1="gear2_link" link2="table2" reason="Never" />
+    <disable_collisions link1="gear2_link" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="link1" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="link2" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="link3" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="link4" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="link6" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="object" reason="User" />
+    <disable_collisions link1="gripper_holder_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="table1" reason="User" />
+    <disable_collisions link1="gripper_holder_link" link2="table2" reason="Never" />
+    <disable_collisions link1="gripper_holder_link" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="link1" link2="link2" reason="Never" />
+    <disable_collisions link1="link1" link2="link3" reason="Adjacent" />
+    <disable_collisions link1="link1" link2="link4" reason="Adjacent" />
+    <disable_collisions link1="link1" link2="link5" reason="Never" />
+    <disable_collisions link1="link1" link2="link6" reason="Never" />
+    <disable_collisions link1="link1" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="link1" link2="object" reason="Never" />
+    <disable_collisions link1="link1" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="link1" link2="table1" reason="Never" />
+    <disable_collisions link1="link1" link2="table2" reason="Never" />
+    <disable_collisions link1="link1" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="link2" link2="link3" reason="Never" />
+    <disable_collisions link1="link2" link2="link4" reason="Never" />
+    <disable_collisions link1="link2" link2="link5" reason="Adjacent" />
+    <disable_collisions link1="link2" link2="link6" reason="Adjacent" />
+    <disable_collisions link1="link2" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="link2" link2="object" reason="Never" />
+    <disable_collisions link1="link2" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="link2" link2="table1" reason="Never" />
+    <disable_collisions link1="link2" link2="table2" reason="Never" />
+    <disable_collisions link1="link2" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="link3" link2="link4" reason="Never" />
+    <disable_collisions link1="link3" link2="link5" reason="Never" />
+    <disable_collisions link1="link3" link2="link6" reason="Never" />
+    <disable_collisions link1="link3" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="link3" link2="object" reason="Never" />
+    <disable_collisions link1="link3" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="link3" link2="table1" reason="Never" />
+    <disable_collisions link1="link3" link2="table2" reason="Never" />
+    <disable_collisions link1="link3" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="link4" link2="link5" reason="Never" />
+    <disable_collisions link1="link4" link2="link6" reason="Never" />
+    <disable_collisions link1="link4" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="link4" link2="object" reason="Never" />
+    <disable_collisions link1="link4" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="link4" link2="table1" reason="Never" />
+    <disable_collisions link1="link4" link2="table2" reason="Never" />
+    <disable_collisions link1="link4" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="link5" link2="link6" reason="Never" />
+    <disable_collisions link1="link5" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="link5" link2="object" reason="Never" />
+    <disable_collisions link1="link5" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="link5" link2="table1" reason="Never" />
+    <disable_collisions link1="link5" link2="table2" reason="Never" />
+    <disable_collisions link1="link5" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="link6" link2="middle_arm_link" reason="Never" />
+    <disable_collisions link1="link6" link2="object" reason="Never" />
+    <disable_collisions link1="link6" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="link6" link2="table1" reason="Never" />
+    <disable_collisions link1="link6" link2="table2" reason="Never" />
+    <disable_collisions link1="link6" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="middle_arm_link" link2="object" reason="Never" />
+    <disable_collisions link1="middle_arm_link" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="middle_arm_link" link2="table1" reason="Never" />
+    <disable_collisions link1="middle_arm_link" link2="table2" reason="Never" />
+    <disable_collisions link1="middle_arm_link" link2="vertical_link" reason="Adjacent" />
+    <disable_collisions link1="object" link2="rotation_link" reason="Never" />
+    <disable_collisions link1="object" link2="table1" reason="Adjacent" />
+    <disable_collisions link1="object" link2="table2" reason="Never" />
+    <disable_collisions link1="object" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="rotation_link" link2="table1" reason="Never" />
+    <disable_collisions link1="rotation_link" link2="table2" reason="Never" />
+    <disable_collisions link1="rotation_link" link2="vertical_link" reason="Adjacent" />
+    <disable_collisions link1="table1" link2="table2" reason="Adjacent" />
+    <disable_collisions link1="table1" link2="vertical_link" reason="Never" />
+    <disable_collisions link1="table2" link2="vertical_link" reason="Never" />
+</robot>

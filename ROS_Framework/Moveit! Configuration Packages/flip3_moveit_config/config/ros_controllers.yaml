@@ -1,0 +1,138 @@
+# Simulation settings for using moveit_sim_controllers
+moveit_sim_hw_interface:
+  joint_model_group: manipulator
+  joint_model_group_pose: start
+# Settings for ros_control_boilerplate control loop
+generic_hw_control_loop:
+  loop_hz: 300
+  cycle_time_error_threshold: 0.01
+# Settings for ros_control hardware interface
+hardware_interface:
+  joints:
+    - base_rotation_joint
+    - vertical_middle_arm_joint
+    - middle_end_joint
+    - gripper_holder_joint
+    - manipulator_gripper_joint
+    - base_gear1_joint
+    - finger_gear1_joint
+    - base_gear2_joint
+    - finger_gear2_joint
+    - joint3
+    - joint4
+    - joint5
+    - joint6
+  sim_control_mode: 1  # 0: position, 1: velocity
+# Publish all joint states
+# Creates the /joint_states topic necessary in ROS
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+controller_list:
+  []
+gripper_joint_controller:
+  type: position_controllers/JointPositionController
+  joints:
+    - manipulator_gripper_joint
+    - base_gear1_joint
+    - finger_gear1_joint
+    - base_gear2_joint
+    - finger_gear2_joint
+  gains:
+    manipulator_gripper_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    base_gear1_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    finger_gear1_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    base_gear2_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    finger_gear2_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+gripper_right_joint_controller:
+  type: position_controllers/JointPositionController
+  joints:
+    - manipulator_gripper_joint
+    - base_gear2_joint
+    - finger_gear2_joint
+  gains:
+    manipulator_gripper_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    base_gear2_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    finger_gear2_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+maipulator_joint_controller:
+  type: position_controllers/JointPositionController
+  joints:
+    - base_rotation_joint
+    - vertical_middle_arm_joint
+    - middle_end_joint
+    - gripper_holder_joint
+  gains:
+    base_rotation_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    vertical_middle_arm_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    middle_end_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    gripper_holder_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+gripper_left_joint_controller:
+  type: position_controllers/JointPositionController
+  joints:
+    - manipulator_gripper_joint
+    - base_gear1_joint
+    - finger_gear1_joint
+  gains:
+    manipulator_gripper_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    base_gear1_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    finger_gear1_joint:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1

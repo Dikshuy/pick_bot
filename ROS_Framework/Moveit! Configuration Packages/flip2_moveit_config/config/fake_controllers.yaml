@@ -1,0 +1,42 @@
+controller_list:
+  - name: fake_flip_manipulator_controller
+    joints:
+      - base_rotation_joint
+      - vertical_middle_arm_joint
+      - middle_end_joint
+      - gripper_holder_joint
+  - name: fake_flip_gripper_left_controller
+    joints:
+      - manipulator_gripper_joint
+      - base_gear1_joint
+      - finger_gear1_joint
+  - name: fake_flip_gripper_right_controller
+    joints:
+      - manipulator_gripper_joint
+      - base_gear2_joint
+      - finger_gear2_joint
+  - name: fake_flip_gripper_controller
+    joints:
+      - manipulator_gripper_joint
+      - base_gear1_joint
+      - finger_gear1_joint
+      - base_gear2_joint
+      - finger_gear2_joint
+  - name: fake_flip_robot_controller
+    joints:
+      - base_rotation_joint
+      - vertical_middle_arm_joint
+      - middle_end_joint
+      - gripper_holder_joint
+      - manipulator_gripper_joint
+      - base_gear1_joint
+      - finger_gear1_joint
+      - base_gear2_joint
+      - finger_gear2_joint
+  - name: fake_flip_arm_controller
+    joints:
+      - base_rotation_joint
+      - vertical_middle_arm_joint
+      - middle_end_joint
+      - gripper_holder_joint
+      - manipulator_gripper_joint
