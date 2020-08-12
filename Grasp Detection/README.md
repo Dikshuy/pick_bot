@@ -19,9 +19,6 @@ alt="UR5 demo" width="320" height="240" border="0" /></a>
 
 GPD consists of two main steps: sampling a large number of grasp candidates, and classifying these candidates as viable grasps or not.
 
-##### Example Input and Output
-<img src="readme/clutter.png" height=170px/>
-
 The reference for this package is:
 [Grasp Pose Detection in Point Clouds](http://arxiv.org/abs/1706.09911).
 
@@ -85,11 +82,7 @@ Run GPD on an point cloud file (PCD or PLY):
 
 The output should look similar to the screenshot shown below. The window is the PCL viewer. You can press [q] to close the window and [h] to see a list of other commands.
 
-<img src="readme/file.png" alt="" width="30%" border="0" />
-
 Below is a visualization of the convention that GPD uses for the grasp pose (position and orientation) of a grasp. The grasp position is indicated by the orange cross and the orientation by the colored arrows.
-
-<img src="readme/hand_frame.png" alt="" width="30%" border="0" />
 
 <a name="parameters"></a>
 ## 4) Parameters
@@ -107,8 +100,6 @@ of samples as large as possible.
 <a name="views"></a>
 ## 5) Views
 
-![rviz screenshot](readme/views.png "Single View and Two Views")
-
 You can use this package with a single or with two depth sensors. The package
 comes with CAFFE model files for both. You can find these files in
 *models/caffe/15channels*. For a single sensor, use
@@ -122,8 +113,6 @@ as it enables PCL to estimate the correct normals direction (which is to point
 toward the camera). Alternatively, using the
 [ROS wrapper](https://github.com/atenpas/gpd_ros/), multiple camera positions
 can be provided.
-
-![rviz screenshot](readme/view_angle.png "Angle Between Sensor Views")
 
 To switch between one and two sensor views, change the parameter `weight_file`
 in your config file.
@@ -235,8 +224,6 @@ Generate some grasp poses and their corresponding images/descriptors:
    ```
    ./test_grasp_image ../tutorials/krylon.pcd 3456 1 ../models/lenet/15channels/params/
    ```
-
-<img src="readme/image_15channels.png" alt="" width="30%" border="0" />
 
 For details on how the grasp image is created, check out our [journal paper](http://arxiv.org/abs/1706.09911).
 
