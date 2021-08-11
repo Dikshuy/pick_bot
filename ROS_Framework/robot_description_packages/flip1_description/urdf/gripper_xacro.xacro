@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="" xmlns:xacro="https://www.ros.org/wiki/xacro">
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com)
+     Commit Version: 1.4.4-24-g24328f6  Build Version: 1.5.7084.36479
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+
+  <xacro:macro name="visual_and_collision_origin">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:macro>
+
+  <xacro:macro name="visual_and_collision_geometry" params="link_name">
+    <geometry>
+      <mesh filename="package://flip1_description/meshes/${link_name}.STL"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="visual_and_collision_for_link" params="material_name  gen_link_name">
+    <visual>
+      <xacro:visual_and_collision_origin/>
+      <xacro:visual_and_collision_geometry link_name="${gen_link_name}"/>
+      <material name="${material_name}"/>
+    </visual>
+    <collision>
+      <xacro:visual_and_collision_origin/>
+      <xacro:visual_and_collision_geometry link_name="${gen_link_name}"/>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="link_tag" params="link material mass *inertial_origin **interia_matrix">
+    <link name="${link}">
+      <xacro:visual_and_collision_for_link material_name="${material}" gen_link_name="${link}"/>
+      <inertial>
+        <mass value="${mass}"/>
+        <xacro:insert_block name="inertial_origin"/>
+        <xacro:insert_block name="interia_matrix"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+
+  <xacro:link_tag link="base_link_gripper" material="orange" mass="0.98099">
+    <origin xyz="0 0.14142 0.00016012" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.003388"
+        ixy="-1.1855E-19"
+        ixz="-1.5339E-20"
+        iyy="0.0012787"
+        iyz="-4.4891E-06"
+        izz="0.0044032" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="gear1_link" material="red" mass="0.02723">
+    <origin xyz="-2.77555756156289E-17 0.0175862034544711 5.55111512312578E-17" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="3.02981038903534E-05"
+        ixy="1.6940658945086E-21"
+        ixz="7.49263431833363E-22"
+        iyy="4.50525088859917E-06"
+        iyz="1.5400867235027E-21"
+        izz="3.43494877805828E-05" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="finger_gear1_link" material="blue" mass="0.17145">
+    <origin xyz="-0.012289 0.101 0" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.0007122"
+        ixy="4.0775E-05"
+        ixz="4.039E-21"
+        iyy="3.2189E-05"
+        iyz="-6.5264E-21"
+        izz="0.00069867" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="gear2_link" material="red" mass="0.02723">
+    <origin xyz="4.33006840808159E-06 0.0177884712258021 5.55111512312578E-17" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="3.0626740029709E-05"
+        ixy="-1.15573930909179E-09"
+        ixz="-1.4165993432485E-21"
+        iyy="4.4831636497222E-06"
+        iyz="4.26143905320326E-22"
+        izz="3.46553024908243E-05"/>
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="finger_gear2_link" material="blue" mass="0.17145">
+    <origin xyz="-0.012289 0.101 -5.5511E-17" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.0007122"
+        ixy="4.0775E-05"
+        ixz="-3.8232E-21"
+        iyy="3.2189E-05"
+        iyz="5.6109E-21"
+        izz="0.00069867" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <joint name="base_gear1_joint" type="revolute">
+    <origin
+      xyz="-0.0275 0.17 0.025"
+      rpy="0 0 0.78573" />
+    <parent
+      link="base_link_gripper" />
+    <child
+      link="gear1_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.53"
+      upper="1.19"
+      effort="25"
+      velocity="1" />
+  </joint>
+
+  <joint name="finger_gear1_joint" type="revolute">
+    <origin
+      xyz="0 0.099495 -0.025"
+      rpy="-3.1416 0 2.3612" />
+    <parent
+      link="gear1_link" />
+    <child
+      link="finger_gear1_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.23"
+      upper="0.43"
+      effort="25"
+      velocity="1" />
+  </joint>
+
+  <joint name="base_gear2_joint" type="revolute">
+    <origin
+      xyz="0.0275 0.17 0.025"
+      rpy="0 0 -0.78573" />
+    <parent
+      link="base_link_gripper" />
+    <child
+      link="gear2_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-0.53"
+      upper="1.19"
+      effort="25"
+      velocity="1" />
+  </joint>
+
+  <joint name="finger_gear2_joint" type="revolute">
+    <origin xyz="0 0.1 -0.025" rpy="0 0 0.78989" />
+    <parent link="gear2_link" />
+    <child link="finger_gear2_link" />
+    <axis xyz="0 0 -1" />
+    <limit
+      lower="-1.23"
+      upper="0.43"
+      effort="25"
+      velocity="1" />
+  </joint>
+
+
+
+
+</robot>

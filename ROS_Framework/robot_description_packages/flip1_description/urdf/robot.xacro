@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot name="bot_manipulator" xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find flip1_description)/urdf/rviz_material.xacro"/>
+  <xacro:include filename="$(find flip1_description)/urdf/chassis_bot_xacro.xacro"/>
+  <xacro:include filename="$(find flip1_description)/urdf/manipulator_xacro.xacro"/>
+  <xacro:include filename="$(find flip1_description)/urdf/gripper_xacro.xacro"/>
+  <xacro:include filename="$(find flip1_description)/urdf/gazebo.xacro"/>
+  <!--<xacro:include filename="$(find trial_bot)/urdf/kinect_sensor.urdf.xacro"/>-->
+  <link name="base_link"/>
+
+  <joint name="bot_world_joint" type="fixed">
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="base_link_bot"/>
+  </joint>
+
+  <joint name="bot_manipulator_joint" type="fixed">
+    <origin xyz="0 0 0.03 " rpy=" 0 0 0"/>
+    <parent link="base_link_bot" />
+    <child link="base_link_arm"/>
+  </joint>
+
+  <joint name="manipulator_gripper_joint" type="revolute">
+    <origin xyz="0 0 0.063" rpy="1.57075 0 0"/>
+    <parent link="gripper_holder_link"/>
+    <child link="base_link_gripper"/>
+    <axis xyz="0 1 0" />
+    <limit
+      lower="-1.6"
+      upper="1.6"
+      effort="25"
+      velocity="1" />
+  </joint>
+
+  <!--<joint name="base_link_kinect_joint" type="fixed">
+    <origin xyz="0 0 1.3" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="kinect_sensor_link"/>
+  </joint>-->
+
+  <link name="table1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.2 0.4 0.50"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+
+  <joint name="table1_base_link_joint" type="fixed">
+    <origin xyz="0.50 0 0.25" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="table1"/>
+  </joint>
+
+  <link name="table2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.3 0.4 0.1"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+
+  <joint name="table2_base_link_joint" type="fixed">
+    <origin xyz="0 0.8 0.05" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="table2"/>
+  </joint>
+
+  <!--<link name="object">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.15 0.10 0.15"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+
+  <joint name="object_base_link_joint" type="fixed">
+    <origin xyz="0 0 0.325" rpy="0 0 0"/>
+    <parent link="table1"/>
+    <child link="object"/>
+  </joint>-->
+
+
+</robot>

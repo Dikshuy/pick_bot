@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot>
+
+  <material name="blue">
+    <color rgba="0 0 1 1"/>
+  </material>
+
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+
+  <material name="purple">
+    <color rgba="1 0 1 1"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="${255/255} ${108/255} ${10/255} 1" />
+  </material>
+
+  <material name="yellow">
+    <color rgba="${255/255} ${255/255} 0 1"/>
+  </material>
+
+  <material name="brown">
+    <color rgba="${158/255} ${104/255} ${42/255} 1"/>
+  </material>-->
+
+</robot>

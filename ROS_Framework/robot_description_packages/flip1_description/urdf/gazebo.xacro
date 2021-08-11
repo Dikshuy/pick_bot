@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<robot name="" xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+  <gazebo reference="base_link_bot">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="link1">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="link3">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="link4">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="link2">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="link5">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="link6">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <gazebo reference="base_link_arm">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="rotation_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="vertical_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="middle_arm_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="end_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+  <gazebo reference="gripper_holder_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <gazebo reference="base_link_gripper">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <gazebo reference="gear1_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="gear2_link">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="finger_gear1_link">
+    <material>Gazebo/SkyBlue</material>
+  </gazebo>
+  <gazebo reference="finger_gear2_link">
+    <material>Gazebo/SkyBlue</material>
+  </gazebo>
+</robot>

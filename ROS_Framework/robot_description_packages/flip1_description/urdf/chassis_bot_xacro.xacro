@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<robot name="bot" xmlns:xacro="https://www.ros.org/wiki/xacro">
+
+  <!--<xacro:include filename="$(find flip1_description)/urdf/rviz_material.xacro"/>-->
+  <xacro:macro name="visual_and_collision_origin">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:macro>
+
+  <xacro:macro name="visual_and_collision_geometry" params="link_name">
+    <geometry>
+      <mesh filename="package://flip1_description/meshes/${link_name}.STL"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="visual_and_collision_for_link" params="material_name  gen_link_name">
+    <visual>
+      <xacro:visual_and_collision_origin/>
+      <xacro:visual_and_collision_geometry link_name="${gen_link_name}"/>
+      <material name="${material_name}"/>
+    </visual>
+    <collision>
+      <xacro:visual_and_collision_origin/>
+      <xacro:visual_and_collision_geometry link_name="${gen_link_name}"/>
+    </collision>
+  </xacro:macro>
+
+  <xacro:macro name="link_tag" params="link material mass *inertial_origin **interia_matrix">
+    <link name="${link}">
+      <xacro:visual_and_collision_for_link material_name="${material}" gen_link_name="${link}"/>
+      <inertial>
+        <mass value="${mass}"/>
+        <xacro:insert_block name="inertial_origin"/>
+        <xacro:insert_block name="interia_matrix"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <xacro:link_tag link="base_link_bot" material="blue" mass="9.976679411">
+    <origin xyz="-1.84685805937335E-06 0 0.015" rpy="0 0 0" />
+    <inertial_matrix>
+      <inertia
+        ixx="0.187958008238022" ixy="3.08331692261721E-07" ixz="3.17637355220364E-19"
+        iyy="0.381816176166743" iyz="1.41513138596527E-18" izz="0.568277677102426" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="link1" material="orange" mass="1.0019">
+    <origin xyz="-1.1102E-16 -0.36 0.0026615" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.03933" ixy="5.6898E-21" ixz="8.3057E-21"
+        iyy="0.00026796" iyz="-2.4157E-19" izz="0.039273" />
+   </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="link2" material="orange" mass="1.0019">
+    <origin xyz="-1.11022302462516E-16 -0.36 0.00266148520433351" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.0393298433372476" ixy="1.31346575687572E-21" ixz="8.30571622249648E-21"
+        iyy="0.000267958739020857" iyz="-9.65217337723654E-20" izz="0.0392729406311258" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="link3" material="purple" mass="0.95841">
+    <origin xyz="0 -2.7756E-17 0" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.00172" ixy="6.5405E-20" ixz="7.1492E-20"
+        iyy="0.0019649" iyz="-1.0822E-19" izz="0.00172" />
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="link4" material="purple" mass="0.95841">
+    <origin xyz="0 -1.1102E-16 0" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.00172" ixy="3.8103E-20" ixz="7.1492E-20"
+        iyy="0.0019649" iyz="-8.0921E-20" izz="0.00172"/>
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="link5" material="purple" mass="0.95841">
+    <origin xyz="1.11022302462516E-16 -2.77555756156289E-17 0" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.00172004064353737" ixy="9.19911852675595E-22" ixz="5.42101086242752E-20"
+        iyy="0.00196493476186237" iyz="-9.05839369835372E-20" izz="0.00172004064353737"/>
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <xacro:link_tag link="link6" material="purple" mass="0.95841">
+    <origin xyz="1.1102E-16 -1.1102E-16 0" rpy="0 0 0"/>
+    <inertial_matrix>
+      <inertia
+        ixx="0.00172" ixy="-1.7049E-20" ixz="2.1684E-19"
+        iyy="0.0019649" iyz="-9.2729E-20" izz="0.00172"/>
+    </inertial_matrix>
+  </xacro:link_tag>
+
+  <!--<link name="base_link"/>
+
+ <joint name="main_tf_joint" type="fixed">
+   <origin xyz="0 0 0.1" rpy="0 0 0"/>
+   <parent link="base_link"/>
+   <child link="base_link_bot"/>
+ </joint>-->
+
+ <joint name="joint1" type="fixed">
+   <origin xyz="0.16597 0.36 -0.04" rpy="0 0 0" />
+   <parent link="base_link_bot" />
+   <child link="link1" />
+ </joint>
+
+ <joint name="joint2" type="fixed">
+   <origin xyz="-0.16597 0.36 -0.04" rpy="0 0 0" />
+   <parent link="base_link_bot" />
+   <child link="link2" />
+ </joint>
+
+ <joint name="joint3" type="continuous">
+   <origin xyz="0 -0.041744 0" rpy="0 0 0" />
+   <parent link="link1" />
+   <child link="link3" />
+   <axis xyz="0 1 0" />
+ </joint>
+
+ <joint name="joint4" type="continuous">
+   <origin xyz="0 -0.67826 0" rpy="0 0 0" />
+   <parent link="link1" />
+   <child link="link4" />
+   <axis xyz="0 1 0" />
+ </joint>
+
+ <joint name="joint5" type="continuous">
+   <origin xyz="0 -0.041744 0" rpy="0 0.082724 0" />
+   <parent link="link2" />
+   <child link="link5" />
+   <axis xyz="0 1 0" />
+ </joint>
+
+ <joint name="joint6" type="continuous">
+   <origin xyz="0 -0.67826 0" rpy="0 -0.55404 0" />
+   <parent link="link2" />
+   <child link="link6" />
+   <axis xyz="0 1 0" />
+ </joint>
+</robot>
