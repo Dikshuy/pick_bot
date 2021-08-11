@@ -1,4 +1,4 @@
-# Flipkart Robotics Challenge-Intelligent Picking ( Team- Excalibur)
+# Flipkart Robotics Challenge 2020 -Intelligent Picking ( Team- Excalibur )
 The problem statement tries to replicate the quintessential warehouse problem of picking in which the
 participants are supposed to build their own robot hardware and software (collectively, a “Robot”) that is
 capable of doing general tasks of picking items from a pick area and place them into a cell in th drop/stow
@@ -19,14 +19,20 @@ area.
   
   Stowing: As soon as the robot reaches the edge of the drop area, a 2D image would be taken. Image manipulation would be done(using OpenCV and CV_Bridge package) to get the       coordinates of each small square grid and navigation would be performed to that point thereafter placing the object one by one in all of the small square grids.  
 
-
+## Reports
+Details about the ideation and implementation can be found in the following reports
+ - [Round 2 Report](https://docs.google.com/presentation/d/1E7Pxu0S3y5Gq43I2gOoLL2gDjIsqgXZ_/edit?usp=sharing&ouid=106073644895434624302&rtpof=true&sd=true)
+ - [Round 3 Report](https://drive.google.com/file/d/1YR9vIRvJ0FvX6L5vVUl5VIaM6T62OgSc/view?usp=sharing)
 
 ## Team
-1.Dikshant<br>
-2.Shreeya Shrikant Athaley<br>
-3.Leena Chaudhari<br>
-4.Navjit Debnath<br>
-5.Tejal Ashwini Barnwal<br>
+1. Dikshant
+2. Tejal Ashiwni Barnwal
+3. Shreeya Shrikant Aathley
+4. Leena Chaudhari
+5. Navjit Debnath<br>
+
+## Note
+The project was not completed to full extent and needs further improvements for the simulation software. The repository isnt maintaoned!
 
 
 
